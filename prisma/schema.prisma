@@ -1,0 +1,156 @@
+// =========================
+// ENTIDADES PRINCIPALES
+// =========================
+
+model Estudiante {
+  id              Int        @id @default(autoincrement())
+  edad            Int
+  origenFamilia   Pais       @relation(fields: [origenFamiliaCodigo], references: [codigo])
+  origenFamiliaCodigo String
+  lenguaMaterna   Lengua     @relation(fields: [lenguaMaternaCodigo], references: [codigo])
+  lenguaMaternaCodigo String
+  habitos         Json       // { tele: 1-5, leer: 1-5, musica: 1-5, web: 1-5, jugar: 1-5 }
+  otrasLenguas    EstudianteLengua[]
+  estancias       Estancia[]
+  sesiones        Sesion[]   @relation("SesionEstudiantes")
+  intentos        Intento[]
+  creadoEn        DateTime   @default(now())
+}
+
+model Profesor {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  contrasena String   // HASH
+  nombre     String
+  apellidos  String
+  creadoEn   DateTime @default(now())
+
+  sesiones   Sesion[]   
+}
+
+model Prueba {
+  id                 Int       @id @default(autoincrement())
+  titulo             String
+  tipo               TipoPrueba
+  configuracion      Json     
+  respuestasCorrectas Json?    
+  creadaEn           DateTime  @default(now())
+  sesiones           SesionPrueba[]
+  intentos           Intento[]
+}
+
+model Intento {
+  id           Int        @id @default(autoincrement())
+  estudiante   Estudiante @relation(fields: [estudianteId], references: [id])
+  estudianteId Int
+  prueba       Prueba     @relation(fields: [pruebaId], references: [id])
+  pruebaId     Int
+  sesion       Sesion     @relation(fields: [sesionId], references: [id])
+  sesionId     Int
+
+  respuestas   Json
+  nota         Float?
+  iniciadoEn   DateTime   @default(now())
+  finalizadoEn DateTime?
+}
+
+// =========================
+// SESIONES
+// =========================
+
+model Sesion {
+  id          Int        @id @default(autoincrement())
+  centro      Centro     @relation(fields: [centroId], references: [id])
+  centroId    Int
+  profesor    Profesor   @relation(fields: [profesorId], references: [id])
+  profesorId  Int
+  fechaHora   DateTime
+  descripcion String?
+
+  pruebas     SesionPrueba[]
+  estudiantes Estudiante[] @relation("SesionEstudiantes")
+  intentos    Intento[]
+}
+
+model SesionPrueba {
+  sesion   Sesion @relation(fields: [sesionId], references: [id])
+  sesionId Int
+  prueba   Prueba @relation(fields: [pruebaId], references: [id])
+  pruebaId Int
+
+  @@id([sesionId, pruebaId])
+}
+
+
+// ============================
+// AUXILIARES
+// ============================
+
+model Centro {
+  id              Int       @id @default(autoincrement())
+  nombre          String
+  ciudad          String
+  comunidadAutonoma String
+  sesiones        Sesion[]
+}
+
+model Pais {
+  codigo   String   @id   // es, us..
+  nombre   String
+  estudiantesOrigen Estudiante[]
+}
+
+model Lengua {
+  codigo   String   @id   // es, en..
+  nombre   String
+  estudiantesMaterna Estudiante[]
+  estudiantesOtras   EstudianteLengua[]
+}
+
+model EstudianteLengua {
+  estudiante   Estudiante @relation(fields: [estudianteId], references: [id])
+  estudianteId Int
+  lengua       Lengua     @relation(fields: [lenguaCodigo], references: [codigo])
+  lenguaCodigo String
+  nivel        NivelLengua
+
+  @@id([estudianteId, lenguaCodigo])
+}
+
+model Estancia {
+  id          Int        @id @default(autoincrement())
+  estudiante  Estudiante @relation(fields: [estudianteId], references: [id])
+  estudianteId Int
+  cuando      String
+  cuantoTiempo Int
+  unidad      UnidadTiempo
+  haDadoClase Boolean
+}
+
+// =========================
+// ENUMS
+// =========================
+
+enum TipoPrueba {
+  Metaphorical
+  Vocabulary
+  OTP
+  Estimulos
+}
+
+enum NivelLengua {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+  Nativo
+}
+
+enum UnidadTiempo {
+  Dias
+  Semanas
+  Meses
+  Anios
+}
