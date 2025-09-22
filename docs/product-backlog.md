@@ -19,8 +19,8 @@
 **E2-05 (HPR-18)** - Como **estudiante**, quiero ver la **prueba en mi móvil, tablet u ordenador**, para poder realizarla desde cualquier dispositivo.  
 **E2-06 (HPR-19)** - Como **estudiante**, quiero **saber cuánto tiempo me queda**, para poder gestionar mejor mi tiempo.  
 **E2-07 (HPR-20)** - Como **estudiante**, quiero **enviar mis respuestas y ver una confirmación**, para estar segura de que he terminado correctamente.  
-**E2-08 (HPR-39)** - Como **estudiante**, quiero recibir un **aviso si mi prueba se abre en otro navegador o dispositivo**, para detectar si alguien intenta suplantarme o interferir en mi intento. 
-**E2-09 (HPR-40)** - Como desarrollador, quiero implementar medidas de cumplimiento de la LOPD y el RGPD (usando cookies técnicas sin información de identificación personal de estudiantes), para garantizar que la aplicación cumpla la normativa legal aplicable a la Universidad de La Rioja y la legislación española.
+**E2-08 (HPR-39)** - Como **estudiante**, quiero recibir un **aviso si mi prueba se abre en otro navegador o dispositivo**, para detectar si alguien intenta suplantarme o interferir en mi intento.  
+**E2-09 (HPR-40)** - Como desarrollador, quiero implementar medidas de cumplimiento de la LOPD y el RGPD (usando cookies técnicas sin información de identificación personal de estudiantes), para garantizar que la aplicación cumpla la normativa legal aplicable a la Universidad de La Rioja y la legislación española.  
 **E2-10 (HPR-41)** - Como **estudiante**, quiero **realizar el Productive Vocabulary Levels Test** y completar las palabras incompletas en frases, para evaluar mi vocabulario en inglés de forma práctica.  
  
 ## Épica 3 (HPR-4): Visualización de resultados
